@@ -1,12 +1,18 @@
+from pathlib import Path
+
+import matplotlib.pyplot as plt
 import panel as pn
+
 from foodapi import FOODAPI as f
 import plots as pl
-import matplotlib.pyplot as plt
+
 pn.extension('plotly')
 
-# Initialize the food api
+_ROOT = Path(__file__).resolve().parent
+
+# Initialize the food api (CSV next to this script)
 api = f()
-api.load_food('indian_food.csv')
+api.load_food(str(_ROOT / 'indian_food.csv'))
 
 # WIDGET DECLARATIONS
 
@@ -66,7 +72,7 @@ height = pn.widgets.IntSlider(name="Height", start=200, end=2500, step=100, valu
 
 # CALLBACK FUNCTIONS
 def get_venn(foods, width, height):
-    '''Creates a venn diagram of three foods and their ingeredients'''
+    '''Creates a venn diagram of three foods and their ingredients'''
     
     ingredient_dict = api.get_food_ingredients(foods)
     venn = pl.get_venn(ingredient_dict, width=width, height=height)
@@ -118,7 +124,7 @@ category_card = pn.Card(
         sankey_target,
         sankey_threshold
     ),
-    title=f"Sankey/Heatmap Controls", width=card_width, collapsed=True
+    title="Sankey/Heatmap Controls", width=card_width, collapsed=True
 )
 
 scatter_card = pn.Card(
@@ -157,9 +163,4 @@ layout = pn.template.EditableTemplate(
         )
     ],
     header_background='#587b7f',
-    #accent_base_color='#587b7f',
-    #theme_toggle=False,
-    #background_color = '#DED6D6'
 ).servable()
-
-layout.show()

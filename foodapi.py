@@ -2,7 +2,7 @@ import pandas as pd
 import cleaner as cl
 
 class FOODAPI:
-    def load_food(self, filename='HW 3/indian_food.csv'):
+    def load_food(self, filename='indian_food.csv'):
         """
         Load and clean the food dataset from CSV file.
 

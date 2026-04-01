@@ -1,41 +1,56 @@
-# 🍛 Indian Food Explorer
+# Indian Food Explorer
 
-A delightful interactive dashboard that lets you explore the rich and diverse world of Indian cuisine! Built with Panel and Python, this tool helps you discover interesting patterns and relationships in Indian food data.
+Interactive [Panel](https://panel.holoviz.org/) dashboard for exploring the [Indian Food dataset](https://www.kaggle.com/datasets/nehaprabhavalkar/indian-food-101) (regional dishes, ingredients, prep/cook times, and diet/flavor metadata).
 
-## ✨ Features
+## Features
 
-![image](image.png)
+- **Ingredients in Common** — Venn diagram of shared ingredients across up to three dishes
+- **Scatter Analysis** — Relationships between prep time, cook time, region, course, and flavor profile
+- **Category Heatmap** — Cross-tab of two categorical columns
+- **Sankeys** — Flows between selected categorical fields (with optional minimum count)
 
-- **Ingredient Explorer** - Create Venn diagrams to discover common ingredients between up to three dishes
-- **Scatter Analysis** - Visualize relationships between cooking time, preparation time, and other attributes
-- **Category Heatmap** - Explore connections between different food categories
-- **Sankey Diagrams** - See the flow relationships between various food attributes
+## Setup
 
-## 🛠️ Setup
+**Conda (recommended)** — environment name matches `requirements.yml`:
 
-1. Clone this repository
-
-2. Choose your preferred installation method:
-
-   **Using Conda (Recommended):**
-   ```bash
-   conda env create -f requirements.yml
-   conda activate ds3500
-
-   ```
-   **Using Pip:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Run the dashboard:
 ```bash
-python food_explorer.py
+conda env create -f requirements.yml
+conda activate ds3500
 ```
 
-## 🛠️ Technical Stack
+**pip:**
 
-- **Panel** - For creating the interactive dashboard
-- **Plotly** - For interactive visualizations
-- **Matplotlib** - For Venn diagrams
-- **Pandas** - For data manipulation
+```bash
+python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+```
 
+## Run the dashboard
+
+From this directory:
+
+```bash
+panel serve foodexplore.py --autoreload --show
+```
+
+Then open the URL printed in the terminal (typically `http://localhost:5006`).
+
+## Stack
+
+| Library | Role |
+|--------|------|
+| Panel | Layout and widgets |
+| Plotly | Scatter, heatmap, Sankey |
+| matplotlib + matplotlib-venn | Venn diagrams |
+| pandas | Data loading and cleaning |
+
+## Layout
+
+| File | Purpose |
+|------|---------|
+| `foodexplore.py` | Dashboard entrypoint (servable app) |
+| `foodapi.py` | Loads CSV and exposes filters / flows |
+| `cleaner.py` | Normalizes names and ingredients |
+| `plots.py` | Plot helpers |
+| `indian_food.csv` | Dataset |
